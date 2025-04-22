@@ -2,6 +2,7 @@ name: CI para C
 
 on:
   push:
+  pull_request:
 
 jobs:
   build:
@@ -9,7 +10,7 @@ jobs:
 
     steps:
     - name: Clonar o repositório
-    - user: actions/checkout@v3
+      uses: actions/checkout@v3
 
     - name: Instalar compilador GCC
       run: sudo apt update && sudo apt install build-essential -y
@@ -17,13 +18,10 @@ jobs:
     - name: Compilar o programa
       run: gcc Github.c -o programa
 
-     - name: Executar o programa
-       run: ./programa
+    - name: Executar o programa
+      run: ./programa
 
-      - name: Executar testes automatizados
-        run: | 
-          gcc -o teste teste.c 
-          ./teste
-        
-
-      
+    - name: Executar testes automatizados
+      run: |
+        gcc -o teste teste.c
+        ./teste
